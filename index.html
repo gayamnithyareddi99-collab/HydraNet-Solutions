@@ -1,0 +1,1546 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>HydraNet Solutions | AI-Powered Smart Water Asset Intelligence</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&family=Space+Grotesk:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.min.js"></script>
+
+<style>
+*{margin:0;padding:0;box-sizing:border-box;}
+html{scroll-behavior:smooth;}
+
+:root{
+  /* Brand Cyan/Teal  HydraNet Water Intelligence */
+  --cyan:#00C9D4;
+  --cyan-light:#26DDE8;
+  --cyan-dim:#009EA7;
+  --cyan-dark:#006E75;
+
+  /* Dark Backgrounds */
+  --bg-black:#030B12;
+  --bg-deep:#05101A;
+  --bg-dark:#081520;
+  --bg-card:#0C1E2E;
+
+  /* Navy/Blue Accents */
+  --navy:#062040;
+  --navy-mid:#0A2E57;
+  --navy-light:#0E3D70;
+  --navy-bright:#0B6EDD;
+  --blue-accent:#0B6EDD;
+  --blue-soft:#3B9BF6;
+  --blue-glow:rgba(11,110,221,0.15);
+
+  /* Light Sections */
+  --light-bg:#EFF6FC;
+  --light-card:#FFFFFF;
+  --light-border:#CCE3F5;
+  --text-dark:#030F1E;
+  --text-mid:#1E3A55;
+  --text-muted:#4A6A8A;
+
+  /* Text on Dark */
+  --white:#FFFFFF;
+  --txt-secondary:#8AB4CF;
+  --txt-dim:#3D6278;
+
+  /* UI */
+  --card-bg:rgba(12,30,46,0.9);
+  --card-border:rgba(0,201,212,0.15);
+  --navy-card:rgba(6,32,64,0.8);
+  --navy-border:rgba(11,110,221,0.25);
+
+  --nav-h:72px;
+  --max-w:1200px;
+  --font:'Space Grotesk',sans-serif;
+  --display:'Outfit',sans-serif;
+  --mono:'JetBrains Mono',monospace;
+  --ease:cubic-bezier(0.4,0,0.2,1);
+  --ease-out:cubic-bezier(0,0,0.2,1);
+}
+
+body{font-family:var(--font);color:var(--white);background:var(--bg-black);overflow-x:hidden;}
+
+::-webkit-scrollbar{width:4px;}
+::-webkit-scrollbar-track{background:var(--bg-black);}
+::-webkit-scrollbar-thumb{background:var(--cyan);border-radius:2px;}
+
+img{display:block;max-width:100%;}
+
+/* ─── NAVBAR ─────────────────────────────────────────── */
+.navbar{
+  position:fixed;top:0;left:0;width:100%;height:var(--nav-h);
+  background:rgba(3,11,18,0.96);backdrop-filter:blur(20px);
+  border-bottom:1px solid rgba(0,201,212,0.12);
+  z-index:1000;display:flex;align-items:center;
+  padding:0 clamp(16px,5vw,60px);
+  justify-content:space-between;
+  transition:border-color 0.3s;
+}
+.nav-logo{
+  font-family:var(--display);font-size:22px;font-weight:800;
+  color:var(--cyan);letter-spacing:-0.3px;
+  display:flex;align-items:center;gap:12px;
+  cursor:pointer;text-decoration:none;flex-shrink:0;
+}
+.nav-logo-icon{
+  width:40px;height:40px;
+  background:linear-gradient(135deg,var(--cyan) 0%,var(--cyan-dark) 100%);
+  border-radius:10px;
+  display:flex;align-items:center;justify-content:center;
+  flex-shrink:0;
+  box-shadow:0 4px 14px rgba(0,201,212,0.3);
+}
+.nav-logo-icon svg{width:22px;height:22px;}
+.nav-logo-text{display:flex;flex-direction:column;line-height:1;}
+.nav-logo-text span{font-size:10px;font-family:var(--mono);font-weight:500;color:var(--txt-secondary);letter-spacing:2px;text-transform:uppercase;margin-top:3px;}
+
+.nav-links{display:flex;align-items:center;gap:4px;list-style:none;}
+.nav-links li button{
+  background:none;border:none;
+  color:var(--txt-secondary);
+  font-size:11px;font-weight:600;
+  padding:8px 16px;border-radius:7px;
+  transition:all 0.22s var(--ease);
+  cursor:pointer;font-family:var(--mono);
+  letter-spacing:0.8px;text-transform:uppercase;
+  position:relative;white-space:nowrap;
+}
+.nav-links li button:hover{color:var(--cyan);background:rgba(0,201,212,0.06);}
+.nav-links li button.active{color:var(--cyan);background:rgba(0,201,212,0.08);}
+.nav-links li button.active::after{
+  content:'';position:absolute;bottom:5px;left:50%;
+  transform:translateX(-50%);width:14px;height:2px;
+  background:var(--cyan);border-radius:2px;
+}
+
+.nav-right{display:flex;align-items:center;gap:10px;}
+.btn-demo-nav{
+  background:linear-gradient(135deg,var(--cyan),var(--cyan-dark));
+  color:var(--bg-black);border:none;padding:9px 20px;border-radius:8px;
+  font-size:11px;font-weight:700;cursor:pointer;
+  transition:all 0.22s;font-family:var(--mono);
+  letter-spacing:0.8px;text-transform:uppercase;white-space:nowrap;
+  box-shadow:0 2px 10px rgba(0,201,212,0.2);
+}
+.btn-demo-nav:hover{transform:translateY(-1px);box-shadow:0 6px 20px rgba(0,201,212,0.4);}
+
+.hamburger{display:none;flex-direction:column;gap:5px;cursor:pointer;padding:6px;background:none;border:none;flex-shrink:0;}
+.hamburger span{width:22px;height:2px;background:var(--cyan);border-radius:2px;transition:0.3s;display:block;}
+.hamburger.open span:nth-child(1){transform:translateY(7px) rotate(45deg);}
+.hamburger.open span:nth-child(2){opacity:0;}
+.hamburger.open span:nth-child(3){transform:translateY(-7px) rotate(-45deg);}
+
+.mobile-nav{
+  display:none;position:fixed;top:var(--nav-h);left:0;width:100%;
+  background:rgba(3,11,18,0.99);backdrop-filter:blur(20px);
+  padding:12px 20px 20px;flex-direction:column;gap:2px;
+  z-index:999;border-bottom:1px solid rgba(0,201,212,0.1);
+  animation:slideDown 0.25s var(--ease-out);
+}
+@keyframes slideDown{from{opacity:0;transform:translateY(-10px);}to{opacity:1;transform:translateY(0);}}
+.mobile-nav.open{display:flex;}
+.mobile-nav button{
+  background:none;border:none;color:var(--txt-secondary);
+  font-size:13px;font-weight:600;padding:13px 12px;
+  border-bottom:1px solid rgba(0,201,212,0.06);
+  cursor:pointer;font-family:var(--mono);text-align:left;
+  text-transform:uppercase;letter-spacing:1px;
+  transition:color 0.2s,background 0.2s;border-radius:6px;
+}
+.mobile-nav button:hover{color:var(--cyan);background:rgba(0,201,212,0.05);}
+.mobile-nav .mob-cta{
+  margin-top:8px;background:linear-gradient(135deg,var(--cyan),var(--cyan-dark));
+  color:var(--bg-black);border:none;padding:13px;
+  border-radius:8px;font-weight:700;font-size:12px;
+  letter-spacing:1px;text-transform:uppercase;cursor:pointer;
+  font-family:var(--mono);
+}
+
+/* ─── PAGE SYSTEM ─────────────────────────────────────── */
+.page{display:none;min-height:100vh;padding-top:var(--nav-h);}
+.page.active{display:block;animation:pgIn 0.35s var(--ease);}
+@keyframes pgIn{from{opacity:0;transform:translateY(10px);}to{opacity:1;transform:translateY(0);}}
+
+/* ─── SECTION COMMONS ─────────────────────────────────── */
+.label-tag{
+  display:inline-flex;align-items:center;gap:8px;
+  font-family:var(--mono);font-size:10px;font-weight:600;
+  letter-spacing:3px;text-transform:uppercase;
+  color:var(--cyan);margin-bottom:14px;
+}
+.label-tag::before{content:'';width:20px;height:1px;background:var(--cyan);}
+
+.label-tag-blue{
+  display:inline-flex;align-items:center;gap:8px;
+  font-family:var(--mono);font-size:10px;font-weight:600;
+  letter-spacing:3px;text-transform:uppercase;
+  color:var(--blue-soft);margin-bottom:14px;
+}
+.label-tag-blue::before{content:'';width:20px;height:1px;background:var(--blue-soft);}
+
+.section-h2{
+  font-family:var(--display);font-size:clamp(28px,3.5vw,52px);
+  font-weight:800;line-height:1.1;letter-spacing:-0.8px;
+  margin-bottom:10px;
+}
+.section-h2.cyan{color:var(--cyan);}
+.section-h2.dark{color:var(--text-dark);}
+.section-h2.white{color:var(--white);}
+.section-h2.navy-txt{color:var(--navy-light);}
+
+.section-divider{width:56px;height:3px;margin:16px 0 28px;border-radius:2px;}
+.divider-cyan{background:linear-gradient(90deg,var(--cyan),transparent);}
+.divider-blue{background:linear-gradient(90deg,var(--blue-accent),transparent);}
+.divider-center{margin:16px auto 28px;}
+
+.para-dark{color:var(--txt-secondary);line-height:1.85;font-size:17px;}
+.para-light{color:var(--text-mid);line-height:1.85;font-size:17px;}
+
+.container{max-width:var(--max-w);margin:0 auto;padding:0 clamp(16px,4vw,60px);}
+
+/* ─── BUTTONS ─────────────────────────────────────────── */
+.btn-primary{
+  display:inline-flex;align-items:center;gap:8px;
+  background:linear-gradient(135deg,var(--cyan),var(--cyan-dark));
+  color:var(--bg-black);padding:13px 28px;border-radius:8px;
+  text-decoration:none;font-weight:700;font-size:12px;
+  letter-spacing:0.8px;text-transform:uppercase;
+  transition:all 0.25s;font-family:var(--mono);border:none;cursor:pointer;
+  box-shadow:0 4px 16px rgba(0,201,212,0.25);
+}
+.btn-primary:hover{transform:translateY(-2px);box-shadow:0 8px 28px rgba(0,201,212,0.4);}
+
+.btn-secondary{
+  display:inline-flex;align-items:center;gap:8px;
+  border:1.5px solid rgba(0,201,212,0.4);color:var(--cyan);
+  padding:12px 28px;border-radius:8px;text-decoration:none;
+  font-weight:700;font-size:12px;letter-spacing:0.8px;
+  text-transform:uppercase;transition:all 0.25s;
+  font-family:var(--mono);background:none;cursor:pointer;
+}
+.btn-secondary:hover{background:rgba(0,201,212,0.07);border-color:var(--cyan);}
+
+.btn-blue{
+  display:inline-flex;align-items:center;gap:8px;
+  background:var(--blue-accent);color:var(--white);
+  padding:12px 28px;border-radius:8px;
+  font-weight:700;font-size:12px;letter-spacing:0.8px;
+  text-transform:uppercase;transition:all 0.25s;
+  font-family:var(--mono);border:none;cursor:pointer;
+  box-shadow:0 4px 16px rgba(11,110,221,0.3);
+}
+.btn-blue:hover{transform:translateY(-2px);background:#0A5CC9;box-shadow:0 8px 28px rgba(11,110,221,0.45);}
+
+/* ─── STATUS INDICATORS ─────────────────────────────── */
+.risk-badge{
+  display:inline-flex;align-items:center;gap:5px;
+  padding:3px 10px;border-radius:20px;
+  font-size:10px;font-weight:700;font-family:var(--mono);letter-spacing:0.5px;
+}
+.risk-green{background:rgba(34,197,94,0.12);color:#22C55E;border:1px solid rgba(34,197,94,0.25);}
+.risk-amber{background:rgba(0,201,212,0.12);color:var(--cyan);border:1px solid rgba(0,201,212,0.25);}
+.risk-red{background:rgba(239,68,68,0.12);color:#EF4444;border:1px solid rgba(239,68,68,0.25);}
+.risk-dot{width:5px;height:5px;border-radius:50%;background:currentColor;flex-shrink:0;}
+
+/* ─── PAGE: HOME ──────────────────────────────────────── */
+
+/* HERO */
+.hero{
+  position:relative;
+  padding:clamp(80px,12vw,120px) 0 clamp(60px,8vw,90px);
+  background:var(--bg-black);overflow:hidden;
+  min-height:calc(100vh - var(--nav-h));
+  display:flex;align-items:center;
+}
+.hero-noise{
+  position:absolute;inset:0;
+  background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.03'/%3E%3C/svg%3E");
+  pointer-events:none;z-index:0;
+}
+.hero-grid-bg{
+  position:absolute;inset:0;
+  background-image:
+    linear-gradient(rgba(0,201,212,0.04) 1px,transparent 1px),
+    linear-gradient(90deg,rgba(0,201,212,0.04) 1px,transparent 1px);
+  background-size:50px 50px;
+  pointer-events:none;z-index:0;
+}
+.hero-glow-1{
+  position:absolute;top:-200px;right:-100px;
+  width:600px;height:600px;
+  background:radial-gradient(circle,rgba(0,201,212,0.07) 0%,transparent 65%);
+  pointer-events:none;z-index:0;
+}
+.hero-glow-2{
+  position:absolute;bottom:-150px;left:-100px;
+  width:500px;height:500px;
+  background:radial-gradient(circle,rgba(11,110,221,0.08) 0%,transparent 65%);
+  pointer-events:none;z-index:0;
+}
+.hero-inner{
+  max-width:var(--max-w);margin:0 auto;
+  padding:0 clamp(16px,4vw,60px);
+  display:grid;grid-template-columns:1.15fr 0.85fr;
+  gap:clamp(30px,5vw,80px);align-items:center;
+  position:relative;z-index:1;width:100%;
+}
+.hero-badge{
+  display:inline-flex;align-items:center;gap:9px;
+  background:rgba(0,201,212,0.07);
+  border:1px solid rgba(0,201,212,0.25);
+  color:var(--cyan);font-size:10px;font-weight:700;
+  letter-spacing:2.5px;padding:6px 14px 6px 10px;
+  border-radius:4px;text-transform:uppercase;
+  margin-bottom:20px;font-family:var(--mono);
+}
+.hero-badge-dot{
+  width:7px;height:7px;border-radius:50%;background:var(--cyan);
+  animation:pulse-dot 1.6s ease-in-out infinite;flex-shrink:0;
+}
+@keyframes pulse-dot{0%,100%{opacity:1;transform:scale(1);}50%{opacity:0.35;transform:scale(0.55);}}
+
+.hero h1{
+  font-family:var(--display);
+  font-size:clamp(38px,4.5vw,68px);
+  line-height:1.06;font-weight:800;
+  letter-spacing:-1.5px;color:var(--white);
+  margin-bottom:10px;
+}
+.hero h1 .cyan{color:var(--cyan);}
+.hero h1 .blue{color:var(--blue-soft);}
+
+.hero-rule{
+  width:64px;height:3px;
+  background:linear-gradient(90deg,var(--cyan),rgba(11,110,221,0.6));
+  margin:20px 0 24px;border-radius:2px;
+}
+.hero-body{
+  color:var(--txt-secondary);font-size:clamp(14px,1.5vw,19px);
+  line-height:1.8;margin-bottom:36px;max-width:540px;
+}
+.hero-btns{display:flex;gap:12px;flex-wrap:wrap;}
+
+/* Hero Score Card */
+.score-card{
+  background:linear-gradient(145deg,rgba(12,30,46,0.95),rgba(5,16,26,0.98));
+  border:1px solid rgba(0,201,212,0.2);border-radius:18px;
+  padding:32px;position:relative;overflow:hidden;
+  box-shadow:0 24px 70px rgba(0,0,0,0.55),0 0 0 1px rgba(0,201,212,0.05);
+}
+.score-card::before{
+  content:'';position:absolute;top:0;left:0;right:0;height:2px;
+  background:linear-gradient(90deg,var(--cyan),var(--blue-accent),transparent);
+}
+.score-card-label{
+  font-family:var(--mono);color:var(--cyan);
+  font-size:9px;letter-spacing:3px;text-transform:uppercase;margin-bottom:20px;
+  display:flex;align-items:center;gap:8px;
+}
+.score-card-label::after{content:'';flex:1;height:1px;background:rgba(0,201,212,0.15);}
+.score-row{
+  display:flex;align-items:center;gap:12px;
+  padding:11px 0;border-bottom:1px solid rgba(255,255,255,0.04);
+}
+.score-row:last-child{border-bottom:none;padding-bottom:0;}
+.score-icon{
+  width:30px;height:30px;border-radius:7px;
+  display:flex;align-items:center;justify-content:center;
+  flex-shrink:0;font-size:14px;
+}
+.score-icon.cyan-bg{background:rgba(0,201,212,0.1);border:1px solid rgba(0,201,212,0.2);}
+.score-icon.blue-bg{background:rgba(11,110,221,0.1);border:1px solid rgba(11,110,221,0.2);}
+.score-icon.red-bg{background:rgba(239,68,68,0.1);border:1px solid rgba(239,68,68,0.2);}
+.score-lbl{color:var(--txt-secondary);font-size:13px;flex:1;font-weight:500;}
+.score-val{
+  font-family:var(--display);color:var(--white);
+  font-size:17px;font-weight:700;
+  display:flex;align-items:center;gap:8px;
+}
+.score-big{
+  margin-top:16px;padding:16px;
+  background:rgba(0,201,212,0.05);border:1px solid rgba(0,201,212,0.15);
+  border-radius:10px;display:flex;align-items:center;justify-content:space-between;
+}
+.score-big-num{font-family:var(--display);font-size:52px;font-weight:800;color:var(--cyan);line-height:1;}
+.score-big-info{text-align:right;}
+.score-big-info .label{font-family:var(--mono);font-size:9px;letter-spacing:2px;text-transform:uppercase;color:var(--txt-dim);}
+.score-big-info .sub{font-size:12px;color:var(--txt-secondary);margin-top:3px;}
+
+/* Stats Strip */
+.stats-strip{
+  background:var(--navy);
+  border-top:1px solid rgba(11,110,221,0.2);
+  border-bottom:1px solid rgba(11,110,221,0.2);
+  padding:clamp(36px,5vw,52px) 0;
+}
+.stats-strip .container{max-width:var(--max-w);padding:0 clamp(16px,4vw,60px);}
+.stats-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:clamp(20px,4vw,50px);}
+.stat-blk{text-align:center;padding:10px;}
+.stat-num{
+  font-family:var(--display);font-size:clamp(30px,4vw,42px);
+  color:var(--cyan);font-weight:800;display:block;margin-bottom:8px;letter-spacing:-1px;
+}
+.stat-txt{color:rgba(255,255,255,0.6);font-size:12px;line-height:1.6;}
+.stat-source{color:rgba(255,255,255,0.3);font-family:var(--mono);font-size:9px;letter-spacing:1px;margin-top:4px;display:block;}
+
+/* Process (How It Works) - LIGHT section */
+.section-light{
+  background:var(--light-bg);
+  padding:clamp(70px,10vw,120px) 0;
+  position:relative;overflow:hidden;
+}
+.section-light::before{
+  content:'';position:absolute;top:0;right:0;
+  width:300px;height:300px;
+  background:radial-gradient(circle,rgba(0,201,212,0.06) 0%,transparent 70%);
+  pointer-events:none;
+}
+.process-intro{max-width:640px;margin-bottom:50px;}
+.process-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:28px;}
+.process-card{
+  background:var(--light-card);
+  border-radius:14px;
+  border:1px solid var(--light-border);
+  border-top:3px solid var(--cyan);
+  overflow:hidden;transition:all 0.3s var(--ease);
+  box-shadow:0 4px 16px rgba(0,0,0,0.06);
+}
+.process-card:hover{transform:translateY(-6px);box-shadow:0 16px 40px rgba(0,201,212,0.12),0 0 0 1px rgba(0,201,212,0.15);}
+.process-card-img{width:100%;height:160px;object-fit:cover;}
+.process-card-body{padding:20px;}
+.step-tag{font-family:var(--mono);font-size:9px;font-weight:700;color:var(--cyan-dim);letter-spacing:2px;margin-bottom:8px;}
+.process-card h3{font-family:var(--display);color:var(--text-dark);font-size:16px;font-weight:700;margin-bottom:8px;letter-spacing:-0.2px;}
+.process-card p{color:var(--text-muted);font-size:13px;line-height:1.7;}
+
+/* Platform (Core Engines) - DARK section */
+.section-dark{
+  background:var(--bg-dark);
+  padding:clamp(70px,10vw,120px) 0;
+  position:relative;overflow:hidden;
+}
+.section-dark::before{
+  content:'';position:absolute;
+  top:-200px;right:-200px;
+  width:600px;height:600px;
+  background:radial-gradient(circle,rgba(11,110,221,0.06) 0%,transparent 70%);
+  pointer-events:none;
+}
+.platform-sub{max-width:640px;margin-bottom:50px;}
+.platform-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:28px;}
+.platform-card{
+  background:var(--card-bg);
+  border:1px solid rgba(11,110,221,0.18);
+  border-radius:14px;overflow:hidden;
+  transition:all 0.3s var(--ease);position:relative;
+}
+.platform-card::before{
+  content:'';position:absolute;top:0;left:0;right:0;height:2px;
+  background:linear-gradient(90deg,var(--blue-accent),var(--cyan),transparent);
+  opacity:0;transition:opacity 0.3s;
+}
+.platform-card:hover{border-color:rgba(11,110,221,0.4);transform:translateY(-4px);box-shadow:0 12px 36px rgba(0,0,0,0.4);}
+.platform-card:hover::before{opacity:1;}
+.platform-card-img{width:100%;height:180px;object-fit:cover;opacity:0.85;}
+.platform-card .inner{padding:22px;}
+.element-badge{
+  display:inline-block;font-family:var(--mono);font-size:9px;font-weight:700;
+  letter-spacing:2px;text-transform:uppercase;padding:3px 10px;border-radius:3px;
+  background:rgba(11,110,221,0.12);color:var(--blue-soft);
+  margin-bottom:10px;border:1px solid rgba(11,110,221,0.25);
+}
+.platform-card h3{font-family:var(--display);color:var(--white);font-size:17px;font-weight:700;margin-bottom:8px;letter-spacing:-0.2px;}
+.platform-card p{color:var(--txt-secondary);font-size:13px;line-height:1.7;}
+.platform-card .more-text{display:none;margin-top:10px;color:var(--txt-secondary);font-size:13px;line-height:1.7;}
+.platform-card.open .more-text{display:block;}
+.expand-btn{
+  margin-top:14px;background:none;
+  border:1px solid rgba(11,110,221,0.3);color:var(--blue-soft);
+  padding:7px 16px;border-radius:5px;cursor:pointer;
+  font-size:10px;font-weight:700;letter-spacing:1px;
+  font-family:var(--mono);transition:all 0.25s;text-transform:uppercase;
+}
+.expand-btn:hover{background:rgba(11,110,221,0.1);border-color:var(--blue-soft);}
+
+/* ─── PAGE: ABOUT ──────────────────────────────────────── */
+.about-hero{
+  background:var(--bg-deep);
+  padding:clamp(70px,10vw,100px) 0;
+  position:relative;overflow:hidden;
+}
+.about-hero::before{
+  content:'';position:absolute;top:-150px;right:-100px;
+  width:500px;height:500px;
+  background:radial-gradient(circle,rgba(0,201,212,0.05) 0%,transparent 65%);
+  pointer-events:none;
+}
+.about-grid{display:grid;grid-template-columns:1.2fr 1fr;gap:clamp(30px,6vw,64px);align-items:start;}
+.about-para{color:var(--txt-secondary);line-height:1.85;margin-bottom:18px;font-size:15px;}
+.about-tags{margin-top:28px;display:grid;grid-template-columns:repeat(2,1fr);gap:8px;}
+.feature-tag{
+  background:rgba(0,201,212,0.06);
+  border:1px solid rgba(0,201,212,0.18);
+  color:var(--cyan);font-family:var(--mono);
+  font-size:10px;font-weight:700;letter-spacing:1.5px;
+  padding:9px 14px;border-radius:6px;text-transform:uppercase;
+}
+
+.founder-card{
+  background:var(--card-bg);
+  border:1px solid rgba(0,201,212,0.15);
+  border-radius:14px;padding:24px;margin-bottom:18px;
+  position:relative;
+}
+.founder-card::before{
+  content:'';position:absolute;top:0;left:0;right:0;height:2px;
+  background:linear-gradient(90deg,var(--cyan),var(--blue-accent),transparent);
+  border-radius:14px 14px 0 0;
+}
+.founder-tag{
+  font-family:var(--mono);font-size:9px;letter-spacing:2.5px;
+  text-transform:uppercase;color:var(--cyan);margin-bottom:8px;
+}
+.founder-card h4{
+  font-family:var(--display);color:var(--white);
+  font-size:20px;font-weight:800;margin-bottom:4px;letter-spacing:-0.3px;
+}
+.founder-title{color:var(--blue-soft);font-size:13px;font-weight:600;margin-bottom:14px;}
+.founder-card p{color:var(--txt-secondary);font-size:13px;line-height:1.75;margin-bottom:10px;}
+.founder-card p:last-child{margin-bottom:0;}
+
+/* ─── PAGE: PLATFORM ───────────────────────────────────── */
+.scoring-callout{
+  background:var(--card-bg);
+  border:1px solid rgba(0,201,212,0.2);
+  border-radius:16px;padding:clamp(24px,4vw,40px);
+  margin-top:48px;position:relative;overflow:hidden;
+}
+.scoring-callout::before{
+  content:'';position:absolute;top:0;left:0;right:0;height:2px;
+  background:linear-gradient(90deg,var(--cyan),var(--blue-accent),transparent);
+}
+.scoring-callout p{color:var(--txt-secondary);line-height:1.85;margin-bottom:20px;font-size:15px;}
+.patent-grid{display:grid;grid-template-columns:repeat(5,1fr);gap:16px;}
+.patent-box{
+  background:rgba(0,201,212,0.05);border:1px solid rgba(0,201,212,0.15);
+  border-radius:8px;padding:14px 10px;text-align:center;
+}
+.pcode{font-family:var(--mono);font-size:9px;color:var(--cyan);letter-spacing:2px;margin-bottom:6px;}
+.pname{font-size:11px;color:var(--txt-secondary);line-height:1.5;font-weight:500;}
+
+/* ─── PAGE: MARKET ─────────────────────────────────────── */
+.market-page{background:var(--bg-dark);}
+
+.kpi-row{display:grid;grid-template-columns:repeat(4,1fr);gap:20px;margin-bottom:44px;}
+.kpi-card{
+  background:var(--card-bg);border:1px solid rgba(0,201,212,0.15);
+  border-radius:14px;padding:28px;text-align:center;
+  transition:all 0.3s;
+}
+.kpi-card:hover{border-color:rgba(0,201,212,0.35);transform:translateY(-3px);}
+.kpi-num{
+  font-family:var(--display);font-size:clamp(24px,3vw,42px);
+  color:var(--cyan);font-weight:800;display:block;margin-bottom:10px;letter-spacing:-0.5px;
+}
+.kpi-lbl{color:var(--txt-secondary);font-size:13px;line-height:1.6;}
+
+.charts-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:28px;margin-bottom:28px;}
+.chart-card{background:var(--card-bg);border:1px solid rgba(0,201,212,0.12);border-radius:12px;padding:clamp(16px,3vw,24px);}
+.chart-card-full{background:var(--card-bg);border:1px solid rgba(0,201,212,0.12);border-radius:12px;padding:clamp(16px,3vw,24px);margin-bottom:22px;}
+.chart-title{font-family:var(--display);color:var(--white);font-size:clamp(14px,2vw,16px);font-weight:700;margin-bottom:4px;}
+.chart-sub{font-family:var(--mono);color:var(--txt-dim);font-size:10px;letter-spacing:1px;margin-bottom:18px;}
+.chart-wrap{height:280px;position:relative;}
+.chart-wrap-lg{height:380px;position:relative;}
+
+/* market overrides handled in main responsive block */
+
+/* ─── PAGE: PRICING ─────────────────────────────────────── */
+.pricing-page{background:var(--bg-dark);}
+.pricing-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:28px;margin-bottom:56px;}
+.price-card{
+  background:var(--card-bg);border:1px solid rgba(0,201,212,0.15);
+  border-radius:18px;padding:38px;transition:all 0.3s;position:relative;
+}
+.price-card:hover{transform:translateY(-4px);box-shadow:0 16px 40px rgba(0,0,0,0.4);}
+.price-card.featured{
+  border-color:var(--cyan);
+  background:linear-gradient(145deg,rgba(0,201,212,0.06),rgba(12,30,46,0.95));
+}
+.price-card.featured::before{
+  content:'MOST POPULAR';position:absolute;top:-12px;left:50%;transform:translateX(-50%);
+  background:var(--cyan);color:var(--bg-black);font-family:var(--mono);
+  font-size:9px;font-weight:700;letter-spacing:2px;padding:4px 16px;border-radius:20px;
+}
+.price-tier{font-family:var(--mono);font-size:9px;color:var(--cyan);letter-spacing:2.5px;text-transform:uppercase;margin-bottom:6px;}
+.price-card h3{font-family:var(--display);color:var(--white);font-size:22px;font-weight:800;margin-bottom:10px;}
+.price-card .desc{color:var(--txt-secondary);font-size:13px;line-height:1.65;margin-bottom:20px;}
+.price-amount{font-family:var(--display);color:var(--cyan);font-size:48px;font-weight:800;letter-spacing:-1.5px;line-height:1;}
+.price-period{font-family:var(--mono);color:var(--txt-dim);font-size:10px;letter-spacing:1px;margin-top:4px;margin-bottom:20px;}
+.price-divider{height:1px;background:rgba(0,201,212,0.12);margin-bottom:20px;}
+.price-features{list-style:none;margin-bottom:28px;}
+.price-features li{display:flex;align-items:flex-start;gap:9px;color:var(--txt-secondary);font-size:13px;padding:7px 0;border-bottom:1px solid rgba(255,255,255,0.03);}
+.price-features li:last-child{border-bottom:none;}
+.chk{color:var(--cyan);font-weight:700;flex-shrink:0;}
+.price-btn{width:100%;padding:13px;border-radius:8px;font-family:var(--mono);font-size:11px;font-weight:700;letter-spacing:1px;text-transform:uppercase;cursor:pointer;transition:all 0.25s;border:none;}
+.price-btn-outline{background:none;border:1.5px solid rgba(0,201,212,0.4);color:var(--cyan);}
+.price-btn-outline:hover{background:rgba(0,201,212,0.07);border-color:var(--cyan);}
+.price-btn-cyan{background:linear-gradient(135deg,var(--cyan),var(--cyan-dark));color:var(--bg-black);}
+.price-btn-cyan:hover{box-shadow:0 6px 20px rgba(0,201,212,0.35);transform:translateY(-1px);}
+
+/* FAQ */
+.faq-wrap{margin-top:10px;}
+.faq-item{border-bottom:1px solid rgba(0,201,212,0.1);overflow:hidden;}
+.faq-q{
+  display:flex;justify-content:space-between;align-items:center;
+  padding:18px 0;cursor:pointer;gap:16px;
+}
+.faq-q h4{font-family:var(--display);color:var(--white);font-size:15px;font-weight:600;line-height:1.4;}
+.faq-icon{color:var(--cyan);font-size:22px;font-weight:300;flex-shrink:0;transition:transform 0.3s;}
+.faq-body{padding:0 0 18px;color:var(--txt-secondary);font-size:14px;line-height:1.8;display:none;}
+.faq-item.open .faq-icon{transform:rotate(45deg);}
+.faq-item.open .faq-body{display:block;}
+
+/* ─── PAGE: CONTACT ─────────────────────────────────────── */
+.contact-page{background:var(--bg-deep);}
+.contact-grid{display:grid;grid-template-columns:1fr 1fr;gap:clamp(30px,6vw,64px);align-items:start;}
+.contact-left-para{color:var(--txt-secondary);line-height:1.85;font-size:15px;margin-bottom:16px;}
+.contact-item{display:flex;align-items:center;gap:14px;padding:12px 0;border-bottom:1px solid rgba(0,201,212,0.06);}
+.contact-icon{width:36px;height:36px;background:rgba(0,201,212,0.08);border:1px solid rgba(0,201,212,0.2);border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:16px;flex-shrink:0;}
+.contact-item-text{display:flex;flex-direction:column;gap:3px;}
+.contact-item-text strong{color:var(--white);font-size:13px;}
+.contact-item-text span{color:var(--txt-secondary);font-size:13px;}
+
+.dash-preview{
+  background:var(--card-bg);border:1px solid rgba(0,201,212,0.15);
+  border-radius:12px;padding:22px;margin-top:24px;
+}
+.dash-preview-label{font-family:var(--mono);font-size:9px;color:var(--cyan);letter-spacing:3px;text-transform:uppercase;margin-bottom:16px;}
+.dash-row{display:flex;justify-content:space-between;align-items:center;padding:10px 0;border-bottom:1px solid rgba(255,255,255,0.04);}
+.dash-row:last-child{border-bottom:none;}
+.dash-lbl{color:var(--txt-secondary);font-size:12px;}
+.dash-val{color:var(--white);font-weight:700;font-family:var(--display);}
+
+.contact-form-card{
+  background:var(--card-bg);border:1px solid rgba(0,201,212,0.15);
+  border-radius:16px;padding:36px;position:relative;overflow:hidden;
+}
+.contact-form-card::before{
+  content:'';position:absolute;top:0;left:0;right:0;height:2px;
+  background:linear-gradient(90deg,var(--cyan),var(--blue-accent),transparent);
+}
+.contact-form-card h3{font-family:var(--display);color:var(--white);font-size:22px;font-weight:800;margin-bottom:24px;}
+.form-group{margin-bottom:18px;}
+.form-label{display:block;font-family:var(--mono);font-size:10px;font-weight:700;color:var(--txt-dim);letter-spacing:1.5px;text-transform:uppercase;margin-bottom:8px;}
+.form-ctrl{
+  width:100%;background:rgba(255,255,255,0.04);
+  border:1px solid rgba(0,201,212,0.2);border-radius:8px;
+  padding:12px 16px;color:var(--white);font-size:14px;
+  font-family:var(--font);transition:all 0.25s;outline:none;
+}
+.form-ctrl::placeholder{color:var(--txt-dim);}
+.form-ctrl:focus{border-color:rgba(0,201,212,0.5);background:rgba(0,201,212,0.03);}
+.form-ctrl option{background:var(--bg-card);}
+.ta{resize:vertical;min-height:90px;}
+.form-submit{
+  width:100%;background:linear-gradient(135deg,var(--cyan),var(--cyan-dark));
+  color:var(--bg-black);border:none;padding:14px;border-radius:8px;
+  font-family:var(--mono);font-size:12px;font-weight:700;letter-spacing:1px;
+  text-transform:uppercase;cursor:pointer;transition:all 0.25s;
+}
+.form-submit:hover{box-shadow:0 6px 20px rgba(0,201,212,0.35);transform:translateY(-1px);}
+#formSuccess{
+  display:none;margin-top:16px;background:rgba(34,197,94,0.1);
+  border:1px solid rgba(34,197,94,0.3);border-radius:8px;
+  padding:14px;color:#22C55E;font-size:13px;text-align:center;
+  font-family:var(--mono);
+}
+
+/* ─── FOOTER ───────────────────────────────────────────── */
+footer{background:var(--bg-black);border-top:1px solid rgba(0,201,212,0.1);padding:clamp(40px,6vw,80px) 0 28px;}
+.footer-inner{max-width:var(--max-w);margin:0 auto;padding:0 clamp(16px,4vw,60px);}
+.footer-grid{display:grid;grid-template-columns:2fr 1fr 1fr;gap:clamp(30px,5vw,80px);margin-bottom:40px;}
+.footer-brand{}
+.footer-logo{font-family:var(--display);color:var(--cyan);font-size:22px;font-weight:800;display:block;margin-bottom:14px;}
+.footer-brand p{color:var(--txt-dim);font-size:13px;line-height:1.75;}
+.footer-col h5{font-family:var(--mono);color:var(--white);font-size:10px;letter-spacing:2.5px;text-transform:uppercase;margin-bottom:14px;}
+.footer-col a{display:block;color:var(--txt-dim);font-size:13px;margin-bottom:10px;cursor:pointer;transition:color 0.2s;}
+.footer-col a:hover{color:var(--cyan);}
+.footer-bottom{border-top:1px solid rgba(0,201,212,0.08);padding-top:20px;display:flex;flex-direction:column;gap:4px;}
+.footer-bottom p{color:var(--txt-dim);font-size:12px;font-family:var(--mono);}
+.footer-bottom span{color:var(--cyan);}
+
+/* ─── RESPONSIVE ─────────────────────────────────────────── */
+
+/* Large desktop (1400px+) */
+@media(min-width:1400px){
+  :root{--max-w:1300px;}
+  .hero h1{font-size:72px;}
+  .hero-body{font-size:20px;max-width:580px;}
+  .section-h2{font-size:54px;}
+  .para-dark,.para-light{font-size:18px;}
+  .stat-num{font-size:46px;}
+  .process-card-img{height:180px;}
+  .platform-card-img{height:200px;}
+  .chart-wrap{height:300px;}
+  .chart-wrap-lg{height:420px;}
+  .score-big-num{font-size:52px;}
+}
+
+@media(max-width:768px){
+  .nav-links,.nav-right .btn-demo-nav{display:none;}
+  .hamburger{display:flex;}
+  .nav-right{gap:0;}
+  .hero-inner{grid-template-columns:1fr;}
+  .hero-inner>div:last-child{display:none;}
+  .stats-grid{grid-template-columns:repeat(2,1fr);}
+  .process-grid{grid-template-columns:repeat(2,1fr);}
+  .platform-grid{grid-template-columns:1fr;}
+  .about-grid{grid-template-columns:1fr;}
+  .kpi-row{grid-template-columns:repeat(2,1fr);gap:12px;margin-bottom:28px;}
+  .kpi-card{padding:16px 12px;}
+  .charts-grid{grid-template-columns:1fr;gap:16px;margin-bottom:16px;}
+  .chart-card{padding:16px;}
+  .chart-card-full{padding:16px;margin-bottom:16px;}
+  .chart-wrap{height:200px;}
+  .chart-wrap-lg{height:260px;}
+  .pricing-grid{grid-template-columns:1fr;}
+  .contact-grid{grid-template-columns:1fr;}
+  .footer-grid{grid-template-columns:1fr;}
+  .patent-grid{grid-template-columns:repeat(2,1fr);}
+}
+@media(max-width:480px){
+  .stats-grid{grid-template-columns:repeat(2,1fr);}
+  .process-grid{grid-template-columns:1fr;}
+  .kpi-row{grid-template-columns:1fr;}
+  .about-tags{grid-template-columns:1fr;}
+  .chart-wrap{height:180px;}
+  .chart-wrap-lg{height:220px;}
+  .chart-title{font-size:14px;}
+}
+</style>
+</head>
+<body>
+
+<!-- ═══════════════════════════════════════════
+     NAVBAR
+═══════════════════════════════════════════════ -->
+<nav class="navbar">
+  <a class="nav-logo" href="#" onclick="showPage('home');return false;">
+    
+    <!-- ❌ Removed nav-logo-icon (SVG) -->
+
+    <div class="nav-logo-text">HydraNet Solutions<span>Water Intelligence</span></div>
+  </a>
+
+  <ul class="nav-links">
+    <li><button id="nav-home" class="active" onclick="showPage('home')">Home</button></li>
+    <li><button id="nav-about" onclick="showPage('about')">About</button></li>
+    <li><button id="nav-platform" onclick="showPage('platform')">Platform</button></li>
+    <li><button id="nav-market" onclick="showPage('market')">Market</button></li>
+    <li><button id="nav-pricing" onclick="showPage('pricing')">Pricing</button></li>
+    <li><button id="nav-contact" onclick="showPage('contact')">Contact</button></li>
+  </ul>
+
+  <div class="nav-right">
+    <button class="btn-demo-nav" onclick="showPage('contact')">Request Demo</button>
+    <button class="hamburger" id="hamburger" aria-label="Menu">
+      <span></span><span></span><span></span>
+    </button>
+  </div>
+</nav>
+
+<!-- Mobile Nav -->
+<div class="mobile-nav" id="mobileNav">
+  <button onclick="showPage('home');closeMobile()">Home</button>
+  <button onclick="showPage('about');closeMobile()">About</button>
+  <button onclick="showPage('platform');closeMobile()">Platform</button>
+  <button onclick="showPage('market');closeMobile()">Market</button>
+  <button onclick="showPage('pricing');closeMobile()">Pricing</button>
+  <button onclick="showPage('contact');closeMobile()">Contact</button>
+  <button class="mob-cta" onclick="showPage('contact');closeMobile()">Request a Demo →</button>
+</div>
+
+
+<!-- ═══════════════════════════════════════════
+     PAGE: HOME
+═══════════════════════════════════════════════ -->
+<div class="page active" id="page-home">
+
+  <!-- HERO -->
+  <section class="hero">
+    <div class="hero-noise"></div>
+    <div class="hero-grid-bg"></div>
+    <div class="hero-glow-1"></div>
+    <div class="hero-glow-2"></div>
+    <div class="hero-inner">
+      <div>
+        <div class="hero-badge">
+          <span class="hero-badge-dot"></span>
+          UK's First AI-Powered Irrigation Asset Intelligence Platform
+        </div>
+        <h1>Predict. <span class="cyan">Protect.</span><br><span class="blue">Comply.</span></h1>
+        <div class="hero-rule"></div>
+        <p class="hero-body">HydraNet transforms aging irrigation networks into resilient Smart Water ecosystems using Graph Neural Networks, Sparse-Sensor Digital Twins, and Regulatory DNA  ensuring zero infrastructure failure, automated EA compliance, and 70% lower monitoring costs for UK estates, NHS grounds, and councils.</p>
+        <div class="hero-btns">
+          <button class="btn-primary" onclick="showPage('contact')">Request a Demo →</button>
+          <button class="btn-secondary" onclick="showPage('platform')">Explore Platform</button>
+        </div>
+      </div>
+      <div>
+        <div class="score-card">
+          <div class="score-card-label">Live Network Health Monitor</div>
+          <div class="score-row">
+            <div class="score-icon cyan-bg">🌊</div>
+            <span class="score-lbl">Hydraulic Criticality Score</span>
+            <span class="score-val">91%</span>
+          </div>
+          <div class="score-row">
+            <div class="score-icon blue-bg">🛰️</div>
+            <span class="score-lbl">Leak Detection Accuracy</span>
+            <span class="score-val">92/100</span>
+          </div>
+          <div class="score-row">
+            <div class="score-icon red-bg">⚠️</div>
+            <span class="score-lbl">Active Pressure Anomalies</span>
+            <span class="score-val">2 <span class="risk-badge risk-red"><span class="risk-dot"></span>Flag</span></span>
+          </div>
+          <div class="score-row">
+            <div class="score-icon cyan-bg">⚡</div>
+            <span class="score-lbl">EA Compliance Status</span>
+            <span class="score-val"><span class="risk-badge risk-green"><span class="risk-dot"></span>Compliant</span></span>
+          </div>
+          <div class="score-row">
+            <div class="score-icon blue-bg">☁️</div>
+            <span class="score-lbl">Edge Inference Latency</span>
+            <span class="score-val">&lt; 1 sec</span>
+          </div>
+          <div class="score-big">
+            <div class="score-big-num">94</div>
+            <div class="score-big-info">
+              <div class="label">Network Health Score</div>
+              <div class="sub"><span class="risk-badge risk-green"><span class="risk-dot"></span>Healthy  All Systems Active</span></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- STATS STRIP -->
+  <div class="stats-strip">
+    <div class="container">
+      <div class="stats-grid">
+        <div class="stat-blk">
+          <span class="stat-num">5B L</span>
+          <div class="stat-txt">Daily water shortfall<br>projected by UK EA by 2050</div>
+          <span class="stat-source">Environment Agency 2024</span>
+        </div>
+        <div class="stat-blk">
+          <span class="stat-num">£37.6M</span>
+          <div class="stat-txt">UK irrigation asset intelligence<br>TAM  annual addressable market</div>
+          <span class="stat-source">HydraNet Market Analysis</span>
+        </div>
+        <div class="stat-blk">
+          <span class="stat-num">92%</span>
+          <div class="stat-txt">Leak detection accuracy in<br>operational field trials</div>
+          <span class="stat-source">HydraNet TRL-7 Pilot Data</span>
+        </div>
+        <div class="stat-blk">
+          <span class="stat-num">£199</span>
+          <div class="stat-txt">Entry SaaS price per month <br>full Smart Water intelligence</div>
+          <span class="stat-source">HydraNet Basic Plan</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- HOW IT WORKS -->
+  <section class="section-light">
+    <div class="container">
+      <div class="process-intro">
+        <div class="label-tag-blue">How It Works</div>
+        <h2 class="section-h2 dark">From Blind Subterranean Pipes to Full Network Intelligence in Days</h2>
+        <div class="section-divider divider-blue"></div>
+        <p class="para-light">Every HydraNet deployment follows a proven four-stage journey  from instant sensor onboarding and digital twin calibration, to real-time hydraulic risk tracking, automated compliance guardrails, and proactive failure prevention  all with zero engineering expertise required from estate managers.</p>
+      </div>
+      <div class="process-grid">
+        <div class="process-card">
+          <img src="hydra1.jpg" class="process-card-img" alt="Deploy Sensors">
+          <div class="process-card-body">
+            <div class="step-tag">STEP 01</div>
+            <h3>Deploy &amp; Connect</h3>
+            <p>Install sparse sensor nodes at key pressure and flow points. HydraNet's edge gateways connect instantly  no specialist cabling or IT infrastructure needed on-site.</p>
+          </div>
+        </div>
+        <div class="process-card">
+          <img src="hydra2.jpg" class="process-card-img" alt="Digital Twin">
+          <div class="process-card-body">
+            <div class="step-tag">STEP 02</div>
+            <h3>Build Digital Twin</h3>
+            <p>Our AI reconstructs full hydraulic network behavior from minimal sensor data. The digital twin maps every pipe, pump, and valve  filling in the blanks between sensor points with physics-informed ML.</p>
+          </div>
+        </div>
+        <div class="process-card">
+          <img src="hydra3.jpg" class="process-card-img" alt="Predict and Alert">
+          <div class="process-card-body">
+            <div class="step-tag">STEP 03</div>
+            <h3>Predict &amp; Alert</h3>
+            <p>GNN-based criticality scoring flags high-risk assets weeks before failure. Micro-oscillation analysis detects pinhole leaks and bearing degradation invisible to manual inspection.</p>
+          </div>
+        </div>
+        <div class="process-card">
+          <img src="hydra4.jpg" class="process-card-img" alt="Comply and Optimise">
+          <div class="process-card-body">
+            <div class="step-tag">STEP 04</div>
+            <h3>Comply &amp; Optimise</h3>
+            <p>Automated EA abstraction tracking ensures zero fine risk under the 2025 Water Act. Energy-aware load shifting reduces pumping costs by aligning cycles with tariffs and solar availability.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CORE ENGINES -->
+  <section class="section-dark">
+    <div class="container">
+      <div class="label-tag">Core Engines</div>
+      <h2 class="section-h2 white">Three Engines. One Water Intelligence Layer.</h2>
+      <div class="section-divider divider-cyan"></div>
+      <p class="para-dark platform-sub">HydraNet combines three proprietary AI modules into a single water asset intelligence infrastructure  the only platform that unifies hydraulic criticality mapping, regulatory orchestration, and sparse-sensor digital twins into one network-wide risk score for UK land managers.</p>
+      <div class="platform-grid">
+        <div class="platform-card">
+          <img src="hydra5.jpg" class="platform-card-img" alt="Hydraulic Criticality Engine">
+          <div class="inner">
+            <div class="element-badge">Engine 01</div>
+            <h3>Hydraulic Criticality Engine</h3>
+            <p>Graph Neural Networks model the entire irrigation network as a dynamic hydraulic graph. A proprietary Criticality Score is computed for every pipe, pump, and valve  identifying which assets are mathematically vital to delivery continuity.</p>
+            <div class="more-text">Real-time sub-1 second edge inference for hydraulic shock events. Systemic risk prioritization allows front-line teams to act on the highest-impact failures first. Compatible with Rain Bird, Hunter, and Netafim legacy controllers via RESTful APIs.</div>
+            <button class="expand-btn" onclick="toggleCard(this)">Learn More ↓</button>
+          </div>
+        </div>
+        <div class="platform-card">
+          <img src="hydra6.jpg" class="platform-card-img" alt="Sparse Sensor Digital Twin">
+          <div class="inner">
+            <div class="element-badge">Engine 02</div>
+            <h3>Sparse-Sensor Digital Twin</h3>
+            <p>Physics-informed ML reconstructs full network hydraulic behavior from minimal sensor data. The AI "fills in the blanks" between sparse nodes  modeling pressure and flow across miles of unmonitored subterranean pipelines at 70% lower hardware cost.</p>
+            <div class="more-text">GAN-based failure signature synthesis trains models on thousands of virtual burst scenarios. Catchment-specific calibration for UK soil profiles (East Anglian clay, Southern chalk aquifers). Self-calibrating algorithms prevent digital twin drift over seasons.</div>
+            <button class="expand-btn" onclick="toggleCard(this)">Learn More ↓</button>
+          </div>
+        </div>
+        <div class="platform-card">
+          <img src="hydra7.jpg" class="platform-card-img" alt="Regulatory Compliance Dashboard">
+          <div class="inner">
+            <div class="element-badge">Engine 03</div>
+            <h3>Regulatory DNA Dashboard</h3>
+            <p>The only platform that integrates the Water (Special Measures) Act 2025 into its core operational logic. EA abstraction licenses are treated as living operational constraints  automatically pausing duty cycles to prevent unlimited fines.</p>
+            <div class="more-text">MCERTS-aligned data logging for legally defensible abstraction reporting. Multi-site portfolio aggregation for councils and large estates. Energy-aware load shifting optimises pumping cycles against real-time tariffs and solar availability.</div>
+            <button class="expand-btn" onclick="toggleCard(this)">Learn More ↓</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+</div><!-- end page home -->
+
+
+<!-- ═══════════════════════════════════════════
+     PAGE: ABOUT
+═══════════════════════════════════════════════ -->
+<div class="page" id="page-about">
+  <section class="about-hero">
+    <div class="container">
+      <div class="about-grid">
+        <div>
+          <div class="label-tag">Our Mission</div>
+          <h2 class="section-h2 cyan">Water Intelligence Built from Front-Line Operational Reality</h2>
+          <div class="section-divider divider-cyan"></div>
+          <p class="about-para">HydraNet was born from a critical, observed failure: UK agricultural estates, NHS trusts, and municipal councils manage miles of subterranean irrigation infrastructure with zero network-level visibility  relying on manual walk-over inspections, binary "on/off" sensors, and reactive crisis management that consistently fails during peak seasonal windows.</p>
+          <p class="about-para">Our platform transforms water infrastructure from a hidden liability into an active intelligence asset. We don't just monitor components  we model the entire hydraulic network as a dynamic graph, computing systemic Criticality Scores that tell estate managers exactly which asset failure will cause cascading damage before it occurs.</p>
+          <p class="about-para">Founded by an agricultural water management specialist with 11 years of front-line experience  including ADB-assisted command area development  HydraNet is domain knowledge encoded in AI, built specifically for the UK's 2025 regulatory landscape and the real-world constraints of rural agricultural infrastructure.</p>
+          <div class="about-tags">
+            <div class="feature-tag">Hydraulic Criticality Engine (GNNs)</div>
+            <div class="feature-tag">Sparse-Sensor Digital Twin</div>
+            <div class="feature-tag">Regulatory DNA Compliance</div>
+            <div class="feature-tag">Edge-AI Rural Resiliency</div>
+            <div class="feature-tag">GAN Failure Signature Library</div>
+            <div class="feature-tag">Multi-Tenant SaaS Architecture</div>
+            <div class="feature-tag">GDPR · UK Data Sovereignty</div>
+            <div class="feature-tag">Patent Application Pending (UKIPO)</div>
+          </div>
+        </div>
+        <div>
+          <div class="founder-card">
+            <div class="founder-tag">Founder &amp; CEO</div>
+            <h4>Muhammad Fawad Javaid</h4>
+            <div class="founder-title">Water Intelligence Architect &amp; Platform Lead</div>
+            <p>Over 11 years of specialized expertise in agricultural water management, irrigation planning, and large-scale project coordination. Former Deputy Director (Liaison Officer) within the Punjab Agriculture Department  managing Asian Development Bank-assisted command area development projects, bridging high-level policy with front-line operational execution.</p>
+            <p>Fawad leads the integration of hydraulic physics with machine learning, ensuring HydraNet solves the specific "blind spot" issues identified during a career managing real subterranean infrastructure. His hands-on approach spans GNN architecture design, failure signature curation, EA compliance logic, and edge-inference optimization for rural environments.</p>
+          </div>
+
+          <div class="founder-card">
+            <div class="founder-tag">Future Team  Strategic Expansion</div>
+            <h4>Growing the Core Team</h4>
+            <div class="founder-title">Strategic UK Hires  Phase 2 Recruitment</div>
+            <p>HydraNet is scaling its technical excellence through targeted hires: a Hydraulic Data Scientist to refine digital twin self-calibration algorithms; an IoT Implementation Lead to manage on-site "Lighthouse" pilot validation across NHS and estate partners; and a Data Ethics &amp; Compliance Officer to oversee EA liaison and Water Act 2025 adherence.</p>
+            <p>All hires are UK-based, leveraging the Government's AI Sector Deal and the UK's world-class ag-tech research ecosystem at institutions including Cranfield University's Water Sciences Institute and the Lincoln Institute for Agri-food Technology.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+</div><!-- end page about -->
+
+
+<!-- ═══════════════════════════════════════════
+     PAGE: PLATFORM
+═══════════════════════════════════════════════ -->
+<div class="page" id="page-platform">
+  <section class="section-dark" style="padding-top:clamp(80px,12vw,120px);">
+    <div class="container">
+      <div class="label-tag">The Platform</div>
+      <h2 class="section-h2 white">Every Layer of HydraNet's Water Intelligence</h2>
+      <div class="section-divider divider-cyan"></div>
+      <p class="para-dark platform-sub">HydraNet is a hybrid cloud-edge SaaS platform built on a modular architecture  React executive dashboards, FastAPI real-time telemetry backend, PyTorch Geometric GNN models, and AWS UK South data infrastructure  designed to serve agricultural estates, NHS grounds, and councils without specialist hydraulic engineering expertise on-site.</p>
+
+      <div class="platform-grid">
+        <div class="platform-card">
+          <img src="hydra8.jpg" class="platform-card-img" alt="GNN Criticality Engine">
+          <div class="inner">
+            <div class="element-badge">Module 01</div>
+            <h3>GNN Hydraulic Criticality Engine</h3>
+            <p>Graph Neural Networks trained on diverse hydraulic topologies compute real-time Criticality Scores for every network asset. Identifies cascading failure risk  a primary manifold fault is mathematically differentiated from a redundant downstream issue.</p>
+            <div class="more-text">Sub-1 second edge inference latency for hydraulic shock events. Compatible with all major irrigation controller brands via RESTful and WebSocket APIs. Continuously refined through live catchment feedback loops with QA oversight from certified irrigation engineers.</div>
+            <button class="expand-btn" onclick="toggleCard(this)">Expand ↓</button>
+          </div>
+        </div>
+        <div class="platform-card">
+          <img src="hydra9.jpg" class="platform-card-img" alt="Digital Twin">
+          <div class="inner">
+            <div class="element-badge">Module 02</div>
+            <h3>Physics-Informed Digital Twin</h3>
+            <p>Sparse sensor data from pressure, flow, vibration, and energy nodes is fused via deep learning to reconstruct full network hydraulic behavior. The digital twin models unmonitored subterranean zones  delivering industrial-grade SCADA intelligence with 70% fewer sensors.</p>
+            <div class="more-text">EPANET integration for physics-coupled simulation verification. GAN-generated synthetic burst data expands failure signature library across diverse UK pipe materials and soil conditions. Self-calibrating algorithms prevent seasonal model drift.</div>
+            <button class="expand-btn" onclick="toggleCard(this)">Expand ↓</button>
+          </div>
+        </div>
+        <div class="platform-card">
+          <img src="hydra10.jpg" class="platform-card-img" alt="Regulatory Compliance">
+          <div class="inner">
+            <div class="element-badge">Module 03</div>
+            <h3>Regulatory Compliance Orchestration</h3>
+            <p>EA abstraction licenses are embedded as living operational constraints. The system automatically calculates real-time consumption against daily and seasonal limits, orchestrating pumping cycles to guarantee 100% compliance with the Water (Special Measures) Act 2025.</p>
+            <div class="more-text">MCERTS-aligned flow monitoring and data logging for legally defensible EA reporting. Automatic duty cycle pausing prevents unlimited Variable Monetary Penalties. Immutable audit logs for all abstraction data submissions.</div>
+            <button class="expand-btn" onclick="toggleCard(this)">Expand ↓</button>
+          </div>
+        </div>
+        <div class="platform-card">
+          <img src="hydra11.jpg" class="platform-card-img" alt="Micro-Oscillation Analysis">
+          <div class="inner">
+            <div class="element-badge">Module 04</div>
+            <h3>Micro-Oscillation Failure Detection</h3>
+            <p>Proprietary algorithms detect early-stage degradation through micro-pressure oscillation analysis  identifying the genesis of failure such as hydraulic hammer shocks, pinhole leaks, and bearing cavitation signatures weeks before physical infrastructure compromise occurs.</p>
+            <div class="more-text">Validated sub-1 second alert latency for hydraulic transient events, preventing water hammer damage via automated valve intervention. Acoustic and vibration stress testing conducted across diverse operational environments for signature library accuracy.</div>
+            <button class="expand-btn" onclick="toggleCard(this)">Expand ↓</button>
+          </div>
+        </div>
+        <div class="platform-card">
+          <img src="hydra13.jpg" class="platform-card-img" alt="Energy Optimisation">
+          <div class="inner">
+            <div class="element-badge">Module 05</div>
+            <h3>Energy-Aware Load Shifting &amp; Solar</h3>
+            <p>The platform integrates real-time time-of-use energy tariffs and on-site solar array output. An automated "Financial-Hydraulic Optimiser" shifts heavy pumping loads to off-peak hours  reducing operational energy costs by 30–40% without compromising delivery schedules.</p>
+            <div class="more-text">Automatically aligns irrigation cycles with peak solar output for estates with renewable energy infrastructure. Dynamic scheduling adapts to weather forecasts and seasonal demand changes. ROI typically achieved within the first irrigation season.</div>
+            <button class="expand-btn" onclick="toggleCard(this)">Expand ↓</button>
+          </div>
+        </div>
+        <div class="platform-card">
+          <img src="hydra12.jpg" class="platform-card-img" alt="Multi-Site Portfolio Dashboard">
+          <div class="inner">
+            <div class="element-badge">Module 06</div>
+            <h3>Multi-Site Portfolio Dashboard</h3>
+            <p>A unified executive view aggregates risk data from multiple disconnected sites  allowing councils managing dozens of park systems or large landholding estates to compare asset health, prioritize CAPEX, and generate portfolio-level EA compliance reports in minutes.</p>
+            <div class="more-text">AES-256 encryption at rest with UK-sovereign AWS South data centers. GDPR-aligned data handling with privacy-by-design architecture. Grafana and Prometheus monitoring ensure 99.9% platform uptime for critical infrastructure clients.</div>
+            <button class="expand-btn" onclick="toggleCard(this)">Expand ↓</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- IP Callout -->
+      <div class="scoring-callout">
+        <div class="label-tag">Proprietary IP</div>
+        <h3 style="font-family:var(--display);color:var(--cyan);font-size:clamp(20px,2.8vw,26px);font-weight:800;margin-bottom:16px;letter-spacing:-0.3px;">The Hydraulic-Criticality Intelligence Architecture</h3>
+        <p>HydraNet's core innovation is a proprietary end-to-end AI framework combining Graph Neural Network criticality mapping, Physics-Informed Machine Learning sparse-sensor reconstruction, GAN-based failure synthesis, and closed-loop regulatory orchestration into a single unified water intelligence platform. No existing patent disclosure combines these five elements for agricultural irrigation infrastructure.</p>
+        <p style="color:var(--txt-secondary);line-height:1.85;margin-bottom:20px;font-size:15px;">Initial patent filings are being prepared via UKIPO with subsequent EPO and WIPO/PCT international protection covering the core GNN-physics fusion methodology. Trademark protection is being established across Nice Classes 9, 38, and 42 in the UK, EU, and North America.</p>
+        <div class="patent-grid">
+          <div class="patent-box"><div class="pcode">Patent A</div><div class="pname">GNN Hydraulic Criticality Engine</div></div>
+          <div class="patent-box"><div class="pcode">Patent B</div><div class="pname">Sparse-Sensor Digital Twin</div></div>
+          <div class="patent-box"><div class="pcode">Patent C</div><div class="pname">Regulatory Compliance Orchestration</div></div>
+          <div class="patent-box"><div class="pcode">Patent D</div><div class="pname">Micro-Oscillation Failure Signatures</div></div>
+          <div class="patent-box"><div class="pcode">Patent E</div><div class="pname">GAN Failure Synthesis Pipeline</div></div>
+        </div>
+      </div>
+    </div>
+  </section>
+</div><!-- end page platform -->
+
+
+<!-- ═══════════════════════════════════════════
+     PAGE: MARKET
+═══════════════════════════════════════════════ -->
+<div class="page" id="page-market">
+  <section class="market-page" style="padding-top:clamp(80px,12vw,120px);">
+    <div class="container">
+      <div class="label-tag">Market Intelligence</div>
+      <h2 class="section-h2 cyan">A £37.6M Documented Gap in UK Water Infrastructure Intelligence</h2>
+      <div class="section-divider divider-cyan"></div>
+      <p class="para-dark" style="max-width:680px;margin-bottom:44px;">HydraNet's market is validated by the Environment Agency's 2050 water security projections, the Water (Special Measures) Act 2025 unlimited penalty regime, and a pre-revenue institutional engagement pipeline spanning NHS Trusts, multi-site councils, and large commercial agricultural estates across the UK.</p>
+
+      <div class="kpi-row">
+        <div class="kpi-card">
+          <span class="kpi-num">£37.6M</span>
+          <div class="kpi-lbl">UK Annual TAM across<br>Agriculture, NHS &amp; Councils</div>
+        </div>
+        <div class="kpi-card">
+          <span class="kpi-num">2,500+</span>
+          <div class="kpi-lbl">Large commercial agricultural<br>estates  primary target</div>
+        </div>
+        <div class="kpi-card">
+          <span class="kpi-num">7.2%</span>
+          <div class="kpi-lbl">UK AgTech CAGR growth<br>rate (2024–2030)</div>
+        </div>
+        <div class="kpi-card">
+          <span class="kpi-num">2025</span>
+          <div class="kpi-lbl">Water Special Measures Act <br>unlimited fine regime live</div>
+        </div>
+      </div>
+
+      <div class="charts-grid">
+        <div class="chart-card">
+          <div class="chart-title">UK Market Opportunity by Sector</div>
+          <div class="chart-sub">Total Addressable Market  annual value (£)</div>
+          <div class="chart-wrap"><canvas id="chartTAM"></canvas></div>
+        </div>
+        <div class="chart-card">
+          <div class="chart-title">Core Pain Points  Land Managers</div>
+          <div class="chart-sub">Key operational challenges driving platform adoption</div>
+          <div class="chart-wrap"><canvas id="chartPainPoints"></canvas></div>
+        </div>
+      </div>
+
+      <div class="chart-card-full">
+        <div class="chart-title">Competitive Positioning  Water Intelligence Landscape</div>
+        <div class="chart-sub">HydraNet vs existing platform categories</div>
+        <div class="chart-wrap-lg"><canvas id="chartRadar"></canvas></div>
+      </div>
+
+      <div class="charts-grid">
+        <div class="chart-card">
+          <div class="chart-title">Global AgTech Market Growth</div>
+          <div class="chart-sub">Smart water management market trajectory (USD Billion)</div>
+          <div class="chart-wrap"><canvas id="chartAgTech"></canvas></div>
+        </div>
+        <div class="chart-card">
+          <div class="chart-title">HydraNet vs Competitors</div>
+          <div class="chart-sub">Feature coverage comparison score</div>
+          <div class="chart-wrap"><canvas id="chartPerf"></canvas></div>
+        </div>
+      </div>
+    </div>
+  </section>
+</div><!-- end page market -->
+
+
+<!-- ═══════════════════════════════════════════
+     PAGE: PRICING
+═══════════════════════════════════════════════ -->
+<div class="page" id="page-pricing">
+  <section class="pricing-page" style="padding-top:clamp(80px,12vw,120px);">
+    <div class="container">
+      <div class="label-tag">Pricing Plans</div>
+      <h2 class="section-h2 cyan">Smart Water Intelligence at Estate-Friendly Pricing</h2>
+      <div class="section-divider divider-cyan"></div>
+      <p class="para-dark" style="max-width:640px;margin-bottom:48px;">Three subscription tiers designed to grow with your landholding. All plans include the full HydraNet Hydraulic Dashboard, Criticality Engine, and Regulatory Compliance Orchestration. No dense hardware requirements. No specialist IT team needed on-site.</p>
+
+      <div class="pricing-grid">
+        <!-- Basic -->
+        <div class="price-card">
+          <div class="price-tier">Basic Plan</div>
+          <h3>Standard</h3>
+          <p class="desc">For small commercial farms and single-site council parks beginning to monitor irrigation asset health and EA compliance.</p>
+          <span class="price-amount">£199</span>
+          <div class="price-period">/ MONTH · BILLED MONTHLY</div>
+          <div class="price-divider"></div>
+          <ul class="price-features">
+            <li><span class="chk">✓</span> Real-time network health diagnostics</li>
+            <li><span class="chk">✓</span> Automated EA abstraction tracking</li>
+            <li><span class="chk">✓</span> Basic leak detection alerts</li>
+            <li><span class="chk">✓</span> Hydraulic health dashboard</li>
+            <li><span class="chk">✓</span> Standard compliance reporting</li>
+            <li><span class="chk">✓</span> Email alert notifications</li>
+            <li><span class="chk">✓</span> 3 platform users</li>
+          </ul>
+          <button class="price-btn price-btn-outline" onclick="showPage('contact')">Get Started</button>
+        </div>
+
+        <!-- Professional (Featured) -->
+        <div class="price-card featured">
+          <div class="price-tier">Professional Plan</div>
+          <h3>Premium</h3>
+          <p class="desc">For large agricultural estates and professional turf sectors requiring full GNN criticality mapping and digital twin intelligence.</p>
+          <span class="price-amount">£499</span>
+          <div class="price-period">/ MONTH · BILLED MONTHLY</div>
+          <div class="price-divider"></div>
+          <ul class="price-features">
+            <li><span class="chk">✓</span> Full GNN-based criticality mapping</li>
+            <li><span class="chk">✓</span> Sparse-Sensor Digital Twin calibration</li>
+            <li><span class="chk">✓</span> Energy-aware load shifting &amp; solar</li>
+            <li><span class="chk">✓</span> Advanced micro-oscillation analysis</li>
+            <li><span class="chk">✓</span> Full audit-ready EA evidence pack</li>
+            <li><span class="chk">✓</span> Priority failure alert system</li>
+            <li><span class="chk">✓</span> 10 platform &amp; contractor users</li>
+          </ul>
+          <button class="price-btn price-btn-cyan" onclick="showPage('contact')">Start Free Pilot</button>
+        </div>
+
+        <!-- Enterprise -->
+        <div class="price-card">
+          <div class="price-tier">Enterprise Plan</div>
+          <h3>Enterprise</h3>
+          <p class="desc">For multi-site councils, NHS Trusts, and large landholding portfolios requiring enterprise-grade risk aggregation and 24/7 oversight.</p>
+          <span class="price-amount">£1,000</span>
+          <div class="price-period">/ MONTH · CUSTOM PRICING</div>
+          <div class="price-divider"></div>
+          <ul class="price-features">
+            <li><span class="chk">✓</span> Multi-site portfolio risk aggregation</li>
+            <li><span class="chk">✓</span> White-label executive dashboards</li>
+            <li><span class="chk">✓</span> Advanced SCADA API integration</li>
+            <li><span class="chk">✓</span> 24/7 technical oversight</li>
+            <li><span class="chk">✓</span> Sector-specific intelligence packs</li>
+            <li><span class="chk">✓</span> Dedicated onboarding &amp; training</li>
+            <li><span class="chk">✓</span> Unlimited users + SSO</li>
+          </ul>
+          <button class="price-btn price-btn-outline" onclick="showPage('contact')">Contact Sales</button>
+        </div>
+      </div>
+
+      <!-- FAQ -->
+      <div class="label-tag">FAQ</div>
+      <h3 style="font-family:var(--display);color:var(--cyan);font-size:clamp(22px,3vw,30px);font-weight:800;margin-bottom:28px;letter-spacing:-0.3px;">Common Questions</h3>
+      <div class="faq-wrap">
+        <div class="faq-item">
+          <div class="faq-q" onclick="toggleFAQ(this)">
+            <h4>Do I need engineering expertise to use HydraNet?</h4>
+            <span class="faq-icon">+</span>
+          </div>
+          <div class="faq-body">No. HydraNet is specifically designed for estate managers, farm directors, and council facilities teams without hydraulic engineering backgrounds. The dashboard-first layout with colour-coded risk indicators means you understand your entire network's health in under 10 minutes. Our design principle: an untrained land manager should be able to act on a critical alert without any specialist training.</div>
+        </div>
+        <div class="faq-item">
+          <div class="faq-q" onclick="toggleFAQ(this)">
+            <h4>How is HydraNet different from existing soil sensors or irrigation controllers?</h4>
+            <span class="faq-icon">+</span>
+          </div>
+          <div class="faq-body">Soil sensors watch the crop  they detect drought stress after the delivery infrastructure has already failed. Irrigation controllers manage on/off scheduling without any intelligence about network health. HydraNet watches the delivery engine itself  modeling the entire subterranean pipe and pump network as a dynamic hydraulic graph, predicting failure before crops are ever impacted. We enhance existing controllers rather than replacing them.</div>
+        </div>
+        <div class="faq-item">
+          <div class="faq-q" onclick="toggleFAQ(this)">
+            <h4>How does HydraNet protect us from the 2025 Water Act unlimited fines?</h4>
+            <span class="faq-icon">+</span>
+          </div>
+          <div class="faq-body">HydraNet treats your Environment Agency abstraction license as a living operational constraint embedded directly in the AI engine. The system automatically calculates real-time extraction against your daily and seasonal limits  automatically pausing duty cycles if limits are approaching. It also generates MCERTS-aligned abstraction data that is legally defensible to EA inspectors, eliminating the risk of non-reporting fines.</div>
+        </div>
+        <div class="faq-item">
+          <div class="faq-q" onclick="toggleFAQ(this)">
+            <h4>Does HydraNet work in rural areas with poor cellular connectivity?</h4>
+            <span class="faq-icon">+</span>
+          </div>
+          <div class="faq-body">Yes  this was a foundational design requirement. HydraNet's edge AI gateways perform all critical inference locally on-site without requiring cloud connectivity. Valve-shutdowns for hydraulic shocks, pressure anomaly detection, and immediate safety logic all operate autonomously on-device. Data is batched and synchronized to the cloud when connectivity is available. Rural resiliency is built into the hardware architecture, not bolted on.</div>
+        </div>
+        <div class="faq-item">
+          <div class="faq-q" onclick="toggleFAQ(this)">
+            <h4>Can I trial HydraNet before committing to a subscription?</h4>
+            <span class="faq-icon">+</span>
+          </div>
+          <div class="faq-body">Yes  we are currently recruiting 5–10 Lighthouse pilot partners (NHS Trusts, commercial estates, and councils) for a structured deployment programme at discounted or pilot-access pricing. Participants receive full platform access, on-site sensor deployment support, dedicated onboarding, and structured feedback sessions that directly shape the product roadmap. Contact us to express your interest in a pilot partnership.</div>
+        </div>
+      </div>
+    </div>
+  </section>
+</div><!-- end page pricing -->
+
+
+<!-- ═══════════════════════════════════════════
+     PAGE: CONTACT
+═══════════════════════════════════════════════ -->
+<div class="page" id="page-contact">
+  <section class="contact-page" style="padding-top:clamp(80px,12vw,120px);">
+    <div class="container">
+      <div class="contact-grid">
+        <div>
+          <div class="label-tag">Get In Touch</div>
+          <h2 class="section-h2 cyan">Request Your Lighthouse Pilot</h2>
+          <div class="section-divider divider-cyan"></div>
+          <p class="contact-left-para">HydraNet is currently recruiting 5–10 UK Lighthouse pilot partners for a structured deployment programme. We're targeting estate managers, NHS grounds directors, and council facilities leads managing agricultural irrigation networks, hospital grounds, or urban park systems with subterranean water delivery infrastructure.</p>
+          <p class="contact-left-para" style="margin-bottom:28px;">Get in touch to schedule a live platform demonstration and discuss how HydraNet can transform your aging water infrastructure from a hidden liability into an intelligent, compliant, and cost-efficient asset  at a fraction of traditional SCADA installation costs.</p>
+
+          <div class="contact-item">
+            <div class="contact-icon">🌐</div>
+            <div class="contact-item-text"><strong>Website</strong><span>hydranetsolutions.com</span></div>
+          </div>
+          <div class="contact-item">
+            <div class="contact-icon">📍</div>
+            <div class="contact-item-text"><strong>Location</strong><span>United Kingdom</span></div>
+          </div>
+          <div class="contact-item">
+            <div class="contact-icon">🛡️</div>
+            <div class="contact-item-text"><strong>Data Infrastructure</strong><span>AWS UK South · UK Data Sovereignty</span></div>
+          </div>
+          <div class="contact-item">
+            <div class="contact-icon">📋</div>
+            <div class="contact-item-text"><strong>IP Status</strong><span>UK Patent Application in Preparation (UKIPO)</span></div>
+          </div>
+          <div class="contact-item">
+            <div class="contact-icon">✅</div>
+            <div class="contact-item-text"><strong>Compliance</strong><span>GDPR · MCERTS · Cyber Essentials Plus</span></div>
+          </div>
+
+</div>
+
+<form class="contact-form-card" action="https://api.web3forms.com/submit" method="POST">
+
+  <!-- 🔑 ACCESS KEY -->
+  <input type="hidden" name="access_key" value="84c75687-3724-454e-ae96-864585dc81c0">
+
+  <!-- OPTIONAL -->
+  <input type="hidden" name="subject" value="HydraNet Demo Request">
+  <input type="hidden" name="from_name" value="HydraNet Website">
+
+  <h3>Request a Demo</h3>
+
+  <div class="form-group">
+    <label class="form-label">Full Name</label>
+    <input type="text" name="name" class="form-ctrl" placeholder="Your name" required>
+  </div>
+
+  <div class="form-group">
+    <label class="form-label">Organisation Name</label>
+    <input type="text" name="organisation" class="form-ctrl" placeholder="Your organisation" required>
+  </div>
+
+  <div class="form-group">
+    <label class="form-label">Email Address</label>
+    <input type="email" name="email" class="form-ctrl" placeholder="your@organisation.co.uk" required>
+  </div>
+
+  <div class="form-group">
+    <label class="form-label">Sector</label>
+    <select name="sector" class="form-ctrl" required>
+      <option value="">Select your sector</option>
+      <option>Agricultural Estate / Farm</option>
+      <option>NHS Trust / Healthcare Grounds</option>
+      <option>Local Council / Municipal</option>
+      <option>Golf Course / Professional Turf</option>
+      <option>Educational / Research Institution</option>
+      <option>Other</option>
+    </select>
+  </div>
+
+  <div class="form-group">
+    <label class="form-label">Site Scale</label>
+    <select name="scale" class="form-ctrl" required>
+      <option value="">Select site scale</option>
+      <option>Single site small estate (&lt;100 acres)</option>
+      <option>Single site large estate (100–500 acres)</option>
+      <option>Multi-site portfolio (2–10 sites)</option>
+      <option>Large multi-site portfolio (10+ sites)</option>
+    </select>
+  </div>
+
+  <div class="form-group">
+    <label class="form-label">Water Infrastructure Challenge</label>
+    <textarea name="message" class="form-ctrl ta" required
+      placeholder="Leak management, EA compliance, energy costs, subterranean visibility, or portfolio risk..."></textarea>
+  </div>
+
+  <button class="form-submit" type="submit">
+    Submit Demo Request →
+  </button>
+
+</form>
+        </div>
+      </div>
+    </div>
+  </section>
+</div><!-- end page contact -->
+
+
+<!-- ═══════════ FOOTER ═══════════ -->
+<footer>
+  <div class="footer-inner">
+    <div class="footer-grid">
+      <div class="footer-brand">
+        <span class="footer-logo">HydraNet Solutions</span>
+        <p>The UK's first AI-powered irrigation asset intelligence platform  transforming aging subterranean water networks into resilient, compliant, and cost-efficient Smart Water ecosystems using Graph Neural Networks, Sparse-Sensor Digital Twins, and Regulatory DNA compliance orchestration.</p>
+      </div>
+      <div class="footer-col">
+        <h5>Platform</h5>
+        <a onclick="showPage('platform')">Hydraulic Criticality Engine</a>
+        <a onclick="showPage('platform')">Sparse-Sensor Digital Twin</a>
+        <a onclick="showPage('platform')">Regulatory DNA Compliance</a>
+        <a onclick="showPage('platform')">Edge-AI Rural Resiliency</a>
+      </div>
+      <div class="footer-col">
+        <h5>Company</h5>
+        <a onclick="showPage('about')">About HydraNet</a>
+        <a onclick="showPage('market')">Market Analysis</a>
+        <a onclick="showPage('pricing')">Pricing &amp; Plans</a>
+        <a onclick="showPage('contact')">Request a Demo</a>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <p>© 2026 <span>HydraNet Solutions</span> · UK Company · AWS UK Data Sovereignty · GDPR Compliant · MCERTS Aligned</p>
+      <p><span>hydranetsolutions.com</span> · Innovator Founder Visa Application · Strictly Confidential</p>
+    </div>
+  </div>
+</footer>
+
+
+<!-- ═══════════ JAVASCRIPT ═══════════ -->
+<script>
+/* ─── PAGE NAV ───────────────────────────────── */
+function showPage(name){
+  document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));
+  document.querySelectorAll('.nav-links button').forEach(b=>b.classList.remove('active'));
+  const pg=document.getElementById('page-'+name);
+  if(pg){pg.classList.add('active');}
+  const btn=document.getElementById('nav-'+name);
+  if(btn){btn.classList.add('active');}
+  window.scrollTo({top:0,behavior:'instant'});
+  if(name==='market'&&!window.marketChartsLoaded){initMarketCharts();window.marketChartsLoaded=true;}
+}
+
+function toggleCard(btn){
+  const card=btn.closest('.platform-card');
+  const isOpen=card.classList.contains('open');
+  document.querySelectorAll('.platform-card').forEach(c=>{
+    c.classList.remove('open');
+    const eb=c.querySelector('.expand-btn');
+    if(eb){eb.textContent=eb.textContent.includes('Expand')?'Expand ↓':'Learn More ↓';}
+  });
+  if(!isOpen){
+    card.classList.add('open');
+    btn.textContent=btn.textContent.includes('Expand')?'Collapse ↑':'Show Less ↑';
+  }
+}
+
+function toggleFAQ(el){
+  el.parentElement.classList.toggle('open');
+}
+
+function closeMobile(){
+  document.getElementById('mobileNav').classList.remove('open');
+  document.getElementById('hamburger').classList.remove('open');
+}
+
+document.getElementById('hamburger').addEventListener('click',function(){
+  this.classList.toggle('open');
+  document.getElementById('mobileNav').classList.toggle('open');
+});
+
+function handleSubmit(){
+  document.getElementById('formSuccess').style.display='block';
+}
+
+/* ─── CHART THEME ────────────────────────────── */
+const CYAN='rgba(0,201,212,1)';
+const CYAN2='rgba(0,201,212,0.75)';
+const CYAN3='rgba(0,201,212,0.4)';
+const BLUE='rgba(11,110,221,0.9)';
+const BLUE2='rgba(11,110,221,0.6)';
+const GRID='rgba(255,255,255,0.05)';
+const MUTED='rgba(138,180,207,0.75)';
+
+Chart.defaults.font.family="'JetBrains Mono', monospace";
+Chart.defaults.font.size=11;
+Chart.defaults.color=MUTED;
+
+/* ─── MARKET CHARTS ──────────────────────────── */
+function initMarketCharts(){
+  // TAM by Sector
+  new Chart(document.getElementById('chartTAM').getContext('2d'),{
+    type:'doughnut',
+    data:{
+      labels:['Agricultural Estates (£16.25M)','Golf & Turf (£12.6M)','Local Councils (£4.9M)','NHS Healthcare (£3.44M)','Education (£0.4M)'],
+      datasets:[{
+        data:[16250000,12600000,4896000,3444000,400000],
+        backgroundColor:['rgba(0,201,212,0.85)','rgba(11,110,221,0.7)','rgba(0,201,212,0.5)','rgba(11,110,221,0.45)','rgba(0,201,212,0.3)'],
+        borderColor:['rgba(0,201,212,0.9)','rgba(11,110,221,0.8)','rgba(0,201,212,0.6)','rgba(11,110,221,0.5)','rgba(0,201,212,0.4)'],
+        borderWidth:1.5
+      }]
+    },
+    options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{position:'bottom',labels:{color:MUTED,boxWidth:10,padding:10,font:{size:10}}}}}
+  });
+
+  // Pain Points
+  new Chart(document.getElementById('chartPainPoints').getContext('2d'),{
+    type:'bar',
+    data:{
+      labels:['Subterranean Blind Spots','EA Compliance Risk','Energy Inefficiency','Manual Inspections','No Portfolio Dashboard'],
+      datasets:[{
+        label:'% Land Managers Affected',
+        data:[82,74,68,78,65],
+        backgroundColor:['rgba(0,201,212,0.8)','rgba(0,201,212,0.65)','rgba(11,110,221,0.7)','rgba(11,110,221,0.55)','rgba(0,201,212,0.45)'],
+        borderRadius:5,barPercentage:0.6
+      }]
+    },
+    options:{responsive:true,maintainAspectRatio:false,indexAxis:'y',plugins:{legend:{display:false}},scales:{x:{grid:{color:GRID},ticks:{color:MUTED,callback:v=>v+'%'}},y:{grid:{display:false},ticks:{color:MUTED,font:{size:10}}}}}
+  });
+
+  // Radar Competitive
+  new Chart(document.getElementById('chartRadar').getContext('2d'),{
+    type:'radar',
+    data:{
+      labels:['UK 2025 Regulatory Alignment','Network-Level Criticality','Sparse-Sensor Affordability','Offline Rural Resiliency','Predictive Failure Detection','Multi-Site Portfolio View'],
+      datasets:[
+        {label:'HydraNet',data:[5,5,5,5,5,5],backgroundColor:'rgba(0,201,212,0.12)',borderColor:CYAN,borderWidth:2,pointBackgroundColor:CYAN},
+        {label:'Netafim / Rivulis',data:[1,2,2,2,2,3],backgroundColor:'rgba(11,110,221,0.07)',borderColor:BLUE2,borderWidth:1.5,pointBackgroundColor:BLUE2},
+        {label:'CropX / Arable',data:[1,1,3,2,2,1],backgroundColor:'rgba(100,200,255,0.06)',borderColor:'rgba(100,200,255,0.5)',borderWidth:1.5,pointBackgroundColor:'rgba(100,200,255,0.5)'},
+        {label:'WINT (Industrial)',data:[1,2,1,1,3,1],backgroundColor:'rgba(120,210,120,0.06)',borderColor:'rgba(120,210,120,0.5)',borderWidth:1.5,pointBackgroundColor:'rgba(120,210,120,0.5)'},
+      ]
+    },
+    options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{position:'bottom',labels:{color:MUTED,boxWidth:10,padding:14,font:{size:10}}}},scales:{r:{backgroundColor:'rgba(0,201,212,0.01)',grid:{color:GRID},pointLabels:{color:MUTED,font:{size:10}},ticks:{display:false},min:0,max:5}}}
+  });
+
+  // AgTech Growth
+  new Chart(document.getElementById('chartAgTech').getContext('2d'),{
+    type:'bar',
+    data:{
+      labels:['2022','2023','2024','2025','2026','2027','2028','2030'],
+      datasets:[
+        {label:'Global AgTech Market (USD B)',data:[18,20,22,25,28,32,36,42],backgroundColor:'rgba(11,110,221,0.65)',borderRadius:5,barPercentage:0.55},
+        {type:'line',label:'Smart Water Growth %',data:[null,9,10,12,14,17,19,22],borderColor:CYAN,borderWidth:2,yAxisID:'y2',tension:0.4,pointBackgroundColor:CYAN,fill:false}
+      ]
+    },
+    options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{position:'bottom',labels:{color:MUTED,boxWidth:10,padding:12,font:{size:10}}}},scales:{x:{grid:{color:GRID},ticks:{color:MUTED}},y:{grid:{color:GRID},ticks:{color:MUTED,callback:v=>'$'+v+'B'}},y2:{position:'right',grid:{display:false},ticks:{color:MUTED,callback:v=>v+'%'}}}}
+  });
+
+  // Performance Comparison
+  new Chart(document.getElementById('chartPerf').getContext('2d'),{
+    type:'bar',
+    data:{
+      labels:['Regulatory DNA','Network Criticality','Sparse-Sensor','Rural Edge AI','Failure Prediction','Affordability'],
+      datasets:[
+        {label:'HydraNet',data:[98,95,95,95,92,90],backgroundColor:CYAN2,borderRadius:5,barPercentage:0.35},
+        {label:'Industry Average (SCADA)',data:[10,45,15,20,40,15],backgroundColor:BLUE2,borderRadius:5,barPercentage:0.35}
+      ]
+    },
+    options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{position:'bottom',labels:{color:MUTED,boxWidth:10,padding:14,font:{size:10}}}},scales:{x:{grid:{color:GRID},ticks:{color:MUTED,font:{size:9}}},y:{grid:{color:GRID},ticks:{color:MUTED,callback:v=>v+' pts'}}}}
+  });
+}
+</script>
+</body>
